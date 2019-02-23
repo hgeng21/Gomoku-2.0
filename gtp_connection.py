@@ -375,34 +375,39 @@ class GtpConnection():
         try:
             signal.signal(signal.SIGALRM, handler)
             signal.alarm(self.time_limit)
+            current_player = self.board.current_player
             move, winner = callAlphabetaDL(self.board,5,self.board.current_player)
             if winner == -1:
-                winner_1 = GoBoardUtil.opponent(self.board.current_player)
+                winner_1 = GoBoardUtil.opponent(current_player)
                 if winner_1 == 1:
                     winner_1 = "b"
                 elif winner_1 == 2:
                     winner_1 = "w"
                 signal.alarm(0)
-                self.respond(winner_1)
+                self.respond("[" + str(winner_1) + "]") #format modification
             elif winner == 0:
                 winner_1 = "draw"
                 signal.alarm(0)
-                self.respond( winner_1)
+                self.respond( "[" + str(winner_1) + modify_move(move) + "]")
             else:
-                winner_1 = self.board.current_player
+                winner_1 = current_player
                 if winner_1 == 1:
                     winner_1 = "b"
                 elif winner_1 == 2:
                     winner_1 = "w"
                 signal.alarm(0)
-                self.respond(winner_1 + "[" + str(move) + "]")
+                self.respond("[" + str(winner_1) + modify_move(move) + "]")
                 
             signal.alarm(0)
             
         except IOError:
             self.respond("unknown")
             
-        
+def modify_move(move):
+    if move == None:
+        return ""
+    else:
+        return " "+str(point_to_coord(move,7)) # where do I get boardsize 7??
         
         
 def point_to_coord(point, boardsize):

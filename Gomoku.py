@@ -18,11 +18,7 @@ class Gomoku():
         self.version = 1.0
         
     def get_move(self, board, color):
-        try:
-            print(GtpConnection.solve_cmd())
-            return GtpConnection.solve_cmd()
-        except:
-            return GoBoardUtil.generate_random_move_gomoku(board)
+        return GoBoardUtil.generate_random_move_gomoku(board)
     
 def run():
     """

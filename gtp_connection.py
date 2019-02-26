@@ -388,7 +388,7 @@ class GtpConnection():
             elif winner == 0:
                 winner_1 = "draw"
                 signal.alarm(0)
-                self.respond( "[" + str(winner_1) + modify_move(move) + "]")
+                self.respond( "[" + str(winner_1) + self.modify_move(move) + "]")
             else:
                 winner_1 = current_player
                 if winner_1 == 1:
@@ -396,18 +396,20 @@ class GtpConnection():
                 elif winner_1 == 2:
                     winner_1 = "w"
                 signal.alarm(0)
-                self.respond("[" + str(winner_1) + modify_move(move) + "]")
+                self.respond("[" + str(winner_1) + self.modify_move(move) + "]")
                 
             signal.alarm(0)
             
         except IOError:
             self.respond("unknown")
             
-def modify_move(move):
-    if move == None:
-        return ""
-    else:
-        return " "+str(point_to_coord(move,7)) # where do I get boardsize 7??
+    def modify_move(self,move):
+        if move == None:
+            return ""
+        else:
+            coord = point_to_coord(move,self.board.size)
+            letter = chr(coord[1]+96).upper()
+            return " "+str(letter)+str(coord[0])
         
         
 def point_to_coord(point, boardsize):

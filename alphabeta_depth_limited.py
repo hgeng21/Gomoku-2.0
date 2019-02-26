@@ -16,7 +16,7 @@ def alphabetaDL(state, alpha, beta, depth, color):
     
     check_end = state.check_game_end_gomoku()
     if check_end[0] or depth == 0 or len(state.get_empty_points())==0:
-        print(">>>game end = {}, color = {}, winner = {}".format(check_end[0],color,check_end[1]))
+        ##print(">>>game end = {}, color = {}, winner = {}".format(check_end[0],color,check_end[1]))
         if not check_end[0]:
             return state.staticallyEvaluateForToPlay(color) ,pt , 0
         else: 
@@ -65,6 +65,6 @@ def callAlphabetaDL(rootState, depth, color):
         if winner!=color: winner = -1
         else: winner = 1
     
-    print(">>> result: move = {}, winner = {}".format(move,winner))
+    ##print(">>> result: move = {}, winner = {}".format(move,winner))
     
     return move,winner
